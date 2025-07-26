@@ -1,75 +1,104 @@
-import { Card, CardContent } from "@/components/ui/card"; import { Button } from "@/components/ui/button"; import { Input } from "@/components/ui/input"; import { Textarea } from "@/components/ui/textarea"; import { motion } from "framer-motion";
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AR-PC — Сборка, ремонт и коллекция ПК</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+    }
+    header {
+      background: #161b22;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #30363d;
+    }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      margin: 0 15px;
+      color: #58a6ff;
+      text-decoration: none;
+    }
+    main {
+      padding: 30px;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    h2 {
+      color: #58a6ff;
+      font-size: 22px;
+    }
+    footer {
+      background: #161b22;
+      padding: 10px;
+      text-align: center;
+      font-size: 14px;
+      border-top: 1px solid #30363d;
+      color: #8b949e;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AR-PC</h1>
+    <nav>
+      <a href="#services">Услуги</a>
+      <a href="#collection">Коллекция</a>
+      <a href="#build">Моя сборка</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+  </header>
 
-export default function Home() { return ( <main className="p-6 space-y-10"> <motion.h1 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-4xl font-bold text-center" > Артём | Коллекционер и мастер ПК </motion.h1>
+  <main>
+    <section id="services">
+      <h2>🛠️ Услуги</h2>
+      <p>Предлагаю ремонт и настройку ПК в посёлке Майский: чистка, сборка, замена комплектующих, настройка Windows, ускорение работы старых систем.</p>
+    </section>
 
-{/* Описание */}
-  <motion.section
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 0.3 }}
-    className="text-center text-lg"
-  >
-    Привет! Меня зовут Артём, я собираю, чиню и люблю компьютеры. <br />
-    У меня уже есть витринная коллекция, и я принимаю заказы на настройку ПК в посёлке Майский.
-  </motion.section>
+    <section id="collection">
+      <h2>🧠 Коллекция железа</h2>
+      <p>Я собираю старые комплектующие как музейную экспозицию:</p>
+      <ul>
+        <li>🔸 Pentium E5300</li>
+        <li>🔸 Core i5-3470</li>
+        <li>🔸 Zeppelin DDR3 2GB</li>
+        <li>🔸 Leadtek PX9600 GT ZL</li>
+        <li>🔸 GT 730 4GD3 (UDORE)</li>
+        <li>🔸 Жёсткие диски Toshiba и WD Caviar (разобранный)</li>
+      </ul>
+    </section>
 
-  {/* Галерея */}
-  <motion.section
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 0.4 }}
-    className="grid grid-cols-2 md:grid-cols-3 gap-4"
-  >
-    {[1, 2, 3, 4, 5, 6].map((i) => (
-      <Card key={i} className="overflow-hidden">
-        <img
-          src={`/gallery/item${i}.jpg`}
-          alt={`Коллекция ${i}`}
-          className="w-full h-48 object-cover"
-        />
-        <CardContent className="p-2 text-sm text-center">Экспонат #{i}</CardContent>
-      </Card>
-    ))}
-  </motion.section>
+    <section id="build">
+      <h2>🖥️ Моя сборка</h2>
+      <p><strong>Цель:</strong> Мощный ПК для работы и игр.</p>
+      <ul>
+        <li>✅ RTX 3070</li>
+        <li>✅ Core i5-13400F</li>
+        <li>✅ Кулер: ID-COOLING FROZN A610 ARGB</li>
+        <li>✅ ОЗУ: 32 ГБ DDR4</li>
+        <li>✅ SSD 128 ГБ + HDD 3 ТБ</li>
+      </ul>
+    </section>
 
-  {/* Обратная связь */}
-  <motion.section
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 0.5 }}
-    className="space-y-4"
-  >
-    <h2 className="text-2xl font-semibold">Связаться со мной</h2>
-    <Input placeholder="Имя" />
-    <Input placeholder="Email или Telegram" />
-    <Textarea placeholder="Ваше сообщение" />
-    <Button className="w-full">Отправить</Button>
-  </motion.section>
+    <section id="contact">
+      <h2>📬 Контакты</h2>
+      <p>Пишите мне в Telegram: <a href="https://t.me/your_username" style="color:#58a6ff;">@your_username</a></p>
+    </section>
+  </main>
 
-  {/* Отзывы */}
-  <motion.section
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 0.6 }}
-    className="space-y-2"
-  >
-    <h2 className="text-2xl font-semibold">Отзывы</h2>
-    <Card><CardContent className="p-3 text-sm">"Спасибо Артёму! Мой ПК теперь как новый!" – Иван</CardContent></Card>
-    <Card><CardContent className="p-3 text-sm">"Быстро и недорого всё починил. Рекомендую." – Ольга</CardContent></Card>
-  </motion.section>
-
-  {/* Обо мне */}
-  <motion.section
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 0.7 }}
-    className="text-center text-base pt-6"
-  >
-    Мне 15 лет, я живу в посёлке Майский и люблю собирать ПК. <br />
-    Уже починил десятки компьютеров, и моя коллекция продолжает расти!
-  </motion.section>
-</main>
-
-); }
-
-      
+  <footer>
+    &copy; 2025 AR-PC. Сделано с душой.
+  </footer>
+</body>
+</html>
