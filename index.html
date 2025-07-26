@@ -1,51 +1,92 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AR-PC — Сборка, ремонт и коллекция ПК</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0d1117;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
       color: #c9d1d9;
     }
     header {
-      background: #161b22;
-      padding: 20px;
+      background: #0d1117;
+      padding: 30px;
       text-align: center;
-      border-bottom: 1px solid #30363d;
+      border-bottom: 2px solid #30363d;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
     h1 {
       margin: 0;
-      font-size: 28px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px;
+      color: #58a6ff;
+      letter-spacing: 2px;
     }
     nav {
-      margin-top: 10px;
+      margin-top: 20px;
     }
     nav a {
-      margin: 0 15px;
-      color: #58a6ff;
+      margin: 0 20px;
+      color: #8be9fd;
       text-decoration: none;
+      font-size: 18px;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #8be9fd;
+      transition: 0.3s;
+    }
+    nav a:hover::after {
+      width: 100%;
     }
     main {
-      padding: 30px;
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
     }
     section {
-      margin-bottom: 40px;
+      margin-bottom: 50px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid #30363d;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(88, 166, 255, 0.1);
     }
     h2 {
       color: #58a6ff;
-      font-size: 22px;
+      font-size: 26px;
+      margin-top: 0;
+    }
+    ul li {
+      margin-bottom: 10px;
     }
     footer {
-      background: #161b22;
-      padding: 10px;
+      background: #0d1117;
+      padding: 20px;
       text-align: center;
       font-size: 14px;
-      border-top: 1px solid #30363d;
       color: #8b949e;
+      border-top: 1px solid #30363d;
+    }
+    a {
+      color: #58a6ff;
+    }
+    @media (max-width: 600px) {
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
     }
   </style>
 </head>
@@ -55,50 +96,45 @@
     <nav>
       <a href="#services">Услуги</a>
       <a href="#collection">Коллекция</a>
-      <a href="#build">Моя сборка</a>
+      <a href="#build">Сборка</a>
       <a href="#contact">Контакты</a>
     </nav>
-  </header>
-
-  <main>
+  </header>  <main>
     <section id="services">
       <h2>🛠️ Услуги</h2>
-      <p>Предлагаю ремонт и настройку ПК в посёлке Майский: чистка, сборка, замена комплектующих, настройка Windows, ускорение работы старых систем.</p>
-    </section>
+      <p>Провожу профессиональный ремонт и настройку ПК в посёлке Майский: глубокая чистка от пыли, сборка с нуля, апгрейд комплектующих, установка и настройка Windows, оптимизация производительности.</p>
+    </section><section id="collection">
+  <h2>🧠 Коллекция железа</h2>
+  <p>Собираю винтажные комплектующие как часть мини-музея ПК. В моей коллекции:</p>
+  <ul>
+    <li>🔸 Pentium E5300</li>
+    <li>🔸 Core i5-3470</li>
+    <li>🔸 Zeppelin DDR3 2GB</li>
+    <li>🔸 Leadtek PX9600 GT ZL</li>
+    <li>🔸 GT 730 4GD3 (UDORE)</li>
+    <li>🔸 Жёсткие диски Toshiba и WD Caviar (разобранный)</li>
+  </ul>
+</section>
 
-    <section id="collection">
-      <h2>🧠 Коллекция железа</h2>
-      <p>Я собираю старые комплектующие как музейную экспозицию:</p>
-      <ul>
-        <li>🔸 Pentium E5300</li>
-        <li>🔸 Core i5-3470</li>
-        <li>🔸 Zeppelin DDR3 2GB</li>
-        <li>🔸 Leadtek PX9600 GT ZL</li>
-        <li>🔸 GT 730 4GD3 (UDORE)</li>
-        <li>🔸 Жёсткие диски Toshiba и WD Caviar (разобранный)</li>
-      </ul>
-    </section>
+<section id="build">
+  <h2>🖥️ Моя сборка</h2>
+  <p><strong>Цель:</strong> создать мощный и сбалансированный ПК для работы, монтажа и игр.</p>
+  <ul>
+    <li>✅ Видеокарта: RTX 3070</li>
+    <li>✅ Процессор: Intel Core i5-13400F</li>
+    <li>✅ Кулер: ID-COOLING FROZN A610 ARGB</li>
+    <li>✅ ОЗУ: 32 ГБ DDR4</li>
+    <li>✅ SSD: 128 ГБ + HDD 3 ТБ</li>
+  </ul>
+</section>
 
-    <section id="build">
-      <h2>🖥️ Моя сборка</h2>
-      <p><strong>Цель:</strong> Мощный ПК для работы и игр.</p>
-      <ul>
-        <li>✅ RTX 3070</li>
-        <li>✅ Core i5-13400F</li>
-        <li>✅ Кулер: ID-COOLING FROZN A610 ARGB</li>
-        <li>✅ ОЗУ: 32 ГБ DDR4</li>
-        <li>✅ SSD 128 ГБ + HDD 3 ТБ</li>
-      </ul>
-    </section>
+<section id="contact">
+  <h2>📬 Контакты</h2>
+  <p>Связаться со мной можно через Telegram: <a href="https://t.me/your_username">@your_username</a></p>
+</section>
 
-    <section id="contact">
-      <h2>📬 Контакты</h2>
-      <p>Пишите мне в Telegram: <a href="https://t.me/your_username" style="color:#58a6ff;">@your_username</a></p>
-    </section>
-  </main>
-
-  <footer>
-    &copy; 2025 AR-PC. Сделано с душой.
+  </main>  <footer>
+    &copy; 2025 AR-PC — Сделано с душой и вниманием к деталям.
   </footer>
 </body>
 </html>
