@@ -1,276 +1,275 @@
-<!DOCTYPE html><html lang="ru"><head>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AR-PC — Сборка, ремонт и коллекция ПК</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <title>AR-PC Сервис</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <style>
+    :root {
+      --bg-color: #000;
+      --text-color: #fff;
+      --header-bg: #111;
+      --highlight-color: #0ff;
+      --image-border: #0ff;
+    }
+    .light-theme {
+      --bg-color: #f4f4f4;
+      --text-color: #000;
+      --header-bg: #fff;
+      --highlight-color: #007bff;
+      --image-border: #007bff;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      font-family: 'Share Tech Mono', monospace;
+    }
     body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: #0d1117;
-      color: #c9d1d9;
-      overflow-x: hidden;
-      transition: background 0.3s, color 0.3s;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      background-image: url('https://i.ibb.co/hKx6N4J/matrix-bg.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      transition: background-color 0.5s, color 0.5s;
     }
-    body.light-mode {
-      background: #f4f4f4;
-      color: #0d1117;
-    }
-    header {
-      background: #161b22;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 1px solid #30363d;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    body.light-mode header {
-      background: #e0e0e0;
-      border-bottom: 1px solid #bbb;
-    }
-    h1 {
-      margin: 0;
-      font-size: 32px;
-      color: #58a6ff;
-      text-shadow: 0 0 10px #58a6ff;
-    }
-    nav {
-      margin-top: 10px;
-    }
-    nav a {
-      margin: 0 15px;
-      color: #58a6ff;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    nav a:hover {
-      color: #f0f6fc;
-      text-shadow: 0 0 8px #58a6ff;
-    }
-    main {
-      padding: 30px;
-      animation: fadeIn 1.5s ease;
-    }
-    section {
-      margin-bottom: 40px;
-      animation: slideUp 1s ease;
-    }
-    h2 {
-      color: #58a6ff;
-      font-size: 22px;
-    }
-    ul li {
-      margin-bottom: 5px;
-    }
-    footer {
-      background: #161b22;
-      padding: 10px;
-      text-align: center;
-      font-size: 14px;
-      border-top: 1px solid #30363d;
-      color: #8b949e;
-    }
-    body.light-mode footer {
-      background: #e0e0e0;
-      color: #333;
-      border-top: 1px solid #bbb;
-    }
-    #cursor {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background: #58a6ff;
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s;
-      z-index: 9999;
-    }
-    #matrix {
+    .preloader {
       position: fixed;
       top: 0;
       left: 0;
-      z-index: -1;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
     }
-    #topBtn {
+    .preloader::after {
+      content: "Загрузка...";
+      font-size: 2rem;
+      color: var(--highlight-color);
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    header, section, footer {
+      transition: transform 0.3s;
+    }
+    header:hover, section:hover, footer:hover {
+      transform: scale(1.01);
+    }
+    nav a {
+      transition: transform 0.3s;
+    }
+    nav a:hover {
+      transform: scale(1.1);
+    }
+    header {
+      background: var(--header-bg);
+      padding: 15px 0;
+      text-align: center;
+      border-bottom: 2px solid var(--highlight-color);
+    }
+    header h1 {
+      font-size: 2em;
+      color: var(--highlight-color);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 10px;
+    }
+    nav a {
+      color: var(--highlight-color);
+      text-decoration: none;
+    }
+    section {
+      padding: 50px 20px;
+    }
+    h2 {
+      color: var(--highlight-color);
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style: none;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .check { color: #0f0; }
+    .warn { color: #f90; }
+    .alert { color: #f00; }
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: var(--header-bg);
+      color: #aaa;
+    }
+    .image-section img {
+      width: 100%;
+      max-width: 500px;
+      margin: 20px auto;
+      display: block;
+      border: 3px solid var(--image-border);
+      border-radius: 10px;
+    }
+    .contact {
+      margin-top: 30px;
+    }
+    .contact a {
+      color: var(--highlight-color);
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    #scrollTopBtn {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: #58a6ff;
-      color: #0d1117;
+      background-color: var(--highlight-color);
       border: none;
       padding: 10px 15px;
-      border-radius: 10px;
+      color: var(--bg-color);
+      border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 0 10px #58a6ff;
-      transition: background 0.3s;
-    }
-    #topBtn:hover {
-      background: #1f6feb;
     }
     #themeToggle {
       position: fixed;
       top: 20px;
       left: 20px;
-      background: #58a6ff;
-      color: #0d1117;
+      padding: 10px 15px;
+      background: var(--highlight-color);
       border: none;
-      padding: 10px;
-      border-radius: 10px;
+      color: var(--bg-color);
+      border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 0 10px #58a6ff;
-      z-index: 10000;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; } to { opacity: 1; }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
     }
-    @keyframes slideUp {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      border: 2px solid var(--image-border);
     }
-    @media (max-width: 600px) {
-      nav a {
-        display: block;
-        margin: 10px 0;
-      }
-      main {
-        padding: 20px 10px;
-      }
+    .reviews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .review-card {
+      flex: 1;
+      min-width: 250px;
+      padding: 15px;
+      background: var(--header-bg);
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>
-  <div id="cursor"></div>
-  <button id="themeToggle">🌓</button>
-  <header>
+  <div class="preloader" id="preloader"></div>
+  <button id="themeToggle">🌗 Тема</button>
+  <header data-aos="fade-down">
     <h1>AR-PC</h1>
     <nav>
       <a href="#services">Услуги</a>
       <a href="#collection">Коллекция</a>
       <a href="#build">Моя сборка</a>
+      <a href="#gallery">Галерея</a>
+      <a href="#reviews">Отзывы</a>
       <a href="#contact">Контакты</a>
     </nav>
   </header>
   <main>
-    <section id="services">
+    <section id="services" data-aos="fade-up">
       <h2>🛠️ Услуги</h2>
       <p>Предлагаю ремонт и настройку ПК в посёлке Майский: чистка, сборка, замена комплектующих, настройка Windows, ускорение работы старых систем.</p>
     </section>
-    <section id="collection">
-      <h2>🧠 Коллекция железа</h2>
+    <section id="collection" data-aos="fade-up">
+      <h2>🧩 Коллекция железа</h2>
       <p>Я собираю старые комплектующие как музейную экспозицию:</p>
       <ul>
-        <li>🔸 Pentium E5300</li>
-        <li>🔸 Core i5-3470</li>
-        <li>🔸 Zeppelin DDR3 2GB</li>
-        <li>🔸 Leadtek PX9600 GT ZL</li>
-        <li>🔸 GT 730 4GD3 (UDORE)</li>
-        <li>🔸 Жёсткие диски Toshiba и WD Caviar (разобранный)</li>
+        <li class="warn">🟧 Pentium E5300</li>
+        <li class="warn">🟧 Core i5-3470</li>
+        <li class="warn">🟧 Zeppelin DDR3 2GB</li>
+        <li class="warn">🟧 Leadtek PX9600 GT ZL</li>
+        <li class="warn">🟧 GT 730 4GD3 (UDORE)</li>
+        <li>Жёсткие диски Toshiba и WD Caviar (разобранный)</li>
       </ul>
+      <div class="image-section">
+        <img src="/mnt/data/66a0be99-12a4-4386-bbcc-8dbbe7d6678f.png" alt="Коллекция железа" />
+      </div>
     </section>
-    <section id="build">
-      <h2>🖥️ Моя сборка</h2>
-      <p><strong>Цель:</strong> Мощный ПК для работы и игр.</p>
+    <section id="build" data-aos="fade-up">
+      <h2>💻 Моя сборка</h2>
+      <p>Цель: Мощный ПК для работы и игр.</p>
       <ul>
-        <li>✅ RTX 3070</li>
-        <li>✅ Core i5-13400F</li>
-        <li>✅ Кулер: ID-COOLING FROZN A610 ARGB</li>
-        <li>✅ ОЗУ: 32 ГБ DDR4</li>
-        <li>✅ SSD 128 ГБ + HDD 3 ТБ</li>
+        <li class="check">✅ RTX 3070</li>
+        <li class="check">✅ Core i5-13400F</li>
+        <li class="check">✅ Кулер: ID-COOLING FROZN A610 ARGB</li>
+        <li class="check">✅ ОЗУ: 32 ГБ, DDR4</li>
+        <li class="check">✅ SSD 128 ГБ + HDD 3 ТБ</li>
       </ul>
-      <model-viewer src="https://modelviewer.dev/shared-assets/models/GPU.glb" alt="GPU 3D" auto-rotate camera-controls ar style="width: 100%; height: 400px;"></model-viewer>
     </section>
-    <section id="contact">
-      <h2>📬 Контакты</h2>
-      <p>Пишите мне в Telegram: <a href="https://t.me/Getringrov" style="color:#58a6ff;">@Getringrov</a></p>
-      <p>WhatsApp: <a href="https://wa.me/77473725060" style="color:#58a6ff;">+7 747 372 5060</a></p>
+    <section id="gallery" data-aos="fade-up">
+      <h2>📸 Галерея</h2>
+      <div class="gallery">
+        <img src="https://i.ibb.co/ZTyzsKn/pc1.jpg" alt="Сборка ПК">
+        <img src="https://i.ibb.co/TYRRSbD/pc2.jpg" alt="Чистка вентилятора">
+        <img src="https://i.ibb.co/bKZ2J9g/pc3.jpg" alt="Установка Windows">
+      </div>
+    </section>
+    <section id="reviews" data-aos="fade-up">
+      <h2>🗣️ Отзывы</h2>
+      <div class="reviews">
+        <div class="review-card">
+          <p>🔧 «Очень быстро и качественно заменил термопасту. ПК как новый!»</p>
+          <p style="color: var(--highlight-color);">— Данияр</p>
+        </div>
+        <div class="review-card">
+          <p>💻 «Помог собрать компьютер под мои задачи, работает идеально!»</p>
+          <p style="color: var(--highlight-color);">— Алихан</p>
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="contact" data-aos="fade-up">
+      <h2>📞 Контакты</h2>
+      <p>📱 WhatsApp: <a href="https://wa.me/77473725060">+7 747 372 5060</a></p>
+      <p>💬 Telegram: <a href="https://t.me/Getringrov">@Getringrov</a></p>
     </section>
   </main>
-  <footer>
-    &copy; 2025 AR-PC. Сделано с душой.
+  <footer data-aos="fade-up">
+    <p>© 2025 AR-PC. Все права защищены.</p>
   </footer>
-  <button id="topBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">🔝 Наверх</button>  <!-- Тема -->  <script>
-    const toggleBtn = document.getElementById('themeToggle');
-    toggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-    });
-  </script>  <!-- Custom cursor -->  <script>
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    });
-  </script>  <!-- Matrix effect -->  <script>
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-    const letters = '01';
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array.from({ length: columns }, () => 1);
-    function drawMatrix() {
-      ctx.fillStyle = 'rgba(13, 17, 23, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#58a6ff';
-      ctx.font = fontSize + 'px monospace';
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > canvas.height || Math.random() > 0.95) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    }
-    setInterval(drawMatrix, 33);
-  </script>  <!-- 🎵 Фоновая музыка -->  <audio id="bgMusic" loop>
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_d5c96237f5.mp3" type="audio/mp3">
+  <button id="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">🔼 Наверх</button>
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_f9c25f0300.mp3?filename=cyberpunk-ambient-125121.mp3" type="audio/mpeg">
     Ваш браузер не поддерживает аудио.
-  </audio><button id="musicToggle" title="Включить/выключить музыку">🎵</button>
-
-  <style>
-    #musicToggle {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background: #58a6ff;
-      color: #0d1117;
-      border: none;
-      padding: 10px 12px;
-      border-radius: 50%;
-      font-size: 18px;
-      cursor: pointer;
-      z-index: 9999;
-      box-shadow: 0 0 10px #58a6ff;
-      transition: background 0.3s;
-    }
-    #musicToggle:hover {
-      background: #1f6feb;
-    }
-    body.light-mode #musicToggle {
-      background: #0d1117;
-      color: #58a6ff;
-      box-shadow: 0 0 10px #0d1117;
-    }
-  </style>  <script>
-    const bgMusic = document.getElementById('bgMusic');
-    const musicBtn = document.getElementById('musicToggle');
-
-    let isPlaying = false;
-
-    function toggleMusic() {
-      if (isPlaying) {
-        bgMusic.pause();
-      } else {
-        bgMusic.play().catch(() => {
-          alert("Нажмите где-нибудь на страницу, чтобы включить музыку");
-        });
+  </audio>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-theme');
+    });
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      if (preloader) {
+        preloader.style.display = 'none';
       }
-      isPlaying = !isPlaying;
-    }
-
+    });
+  </script>
+</body>
+</html>
