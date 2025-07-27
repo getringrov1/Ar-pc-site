@@ -1,6 +1,4 @@
-
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,40 +36,6 @@
       background-attachment: fixed;
       transition: background-color 0.5s, color 0.5s;
     }
-    .preloader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: var(--bg-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    .preloader::after {
-      content: "Загрузка...";
-      font-size: 2rem;
-      color: var(--highlight-color);
-      animation: blink 1s infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-    header, section, footer {
-      transition: transform 0.3s;
-    }
-    header:hover, section:hover, footer:hover {
-      transform: scale(1.01);
-    }
-    nav a {
-      transition: transform 0.3s;
-    }
-    nav a:hover {
-      transform: scale(1.1);
-    }
     header {
       background: var(--header-bg);
       padding: 15px 0;
@@ -91,6 +55,10 @@
     nav a {
       color: var(--highlight-color);
       text-decoration: none;
+      transition: transform 0.3s;
+    }
+    nav a:hover {
+      transform: scale(1.1);
     }
     section {
       padding: 50px 20px;
@@ -115,7 +83,7 @@
       background: var(--header-bg);
       color: #aaa;
     }
-    .image-section img {
+    .image-section img, .gallery img {
       width: 100%;
       max-width: 500px;
       margin: 20px auto;
@@ -132,21 +100,8 @@
       display: inline-block;
       margin-top: 10px;
     }
-    #scrollTopBtn {
+    #scrollTopBtn, #themeToggle {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: var(--highlight-color);
-      border: none;
-      padding: 10px 15px;
-      color: var(--bg-color);
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    #themeToggle {
-      position: fixed;
-      top: 20px;
-      left: 20px;
       padding: 10px 15px;
       background: var(--highlight-color);
       border: none;
@@ -154,15 +109,18 @@
       border-radius: 8px;
       cursor: pointer;
     }
+    #scrollTopBtn {
+      bottom: 20px;
+      right: 20px;
+    }
+    #themeToggle {
+      top: 20px;
+      left: 20px;
+    }
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 15px;
-    }
-    .gallery img {
-      width: 100%;
-      border-radius: 10px;
-      border: 2px solid var(--image-border);
     }
     .reviews {
       display: flex;
@@ -176,100 +134,95 @@
       background: var(--header-bg);
       border-radius: 10px;
     }
+    .music-player {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: var(--header-bg);
+      padding: 5px;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
-  <div class="preloader" id="preloader"></div>
-  <button id="themeToggle">🌗 Тема</button>
-  <header data-aos="fade-down">
+  <div class="preloader"></div>
+  <button id="themeToggle">🌗</button>
+  <header>
     <h1>AR-PC</h1>
     <nav>
       <a href="#services">Услуги</a>
       <a href="#collection">Коллекция</a>
-      <a href="#build">Моя сборка</a>
+      <a href="#mybuild">Моя сборка</a>
       <a href="#gallery">Галерея</a>
       <a href="#reviews">Отзывы</a>
       <a href="#contact">Контакты</a>
     </nav>
   </header>
-  <main>
-    <section id="services" data-aos="fade-up">
-      <h2>🛠️ Услуги</h2>
-      <p>Предлагаю ремонт и настройку ПК в посёлке Майский: чистка, сборка, замена комплектующих, настройка Windows, ускорение работы старых систем.</p>
-    </section>
-    <section id="collection" data-aos="fade-up">
-      <h2>🧩 Коллекция железа</h2>
-      <p>Я собираю старые комплектующие как музейную экспозицию:</p>
-      <ul>
-        <li class="warn">🟧 Pentium E5300</li>
-        <li class="warn">🟧 Core i5-3470</li>
-        <li class="warn">🟧 Zeppelin DDR3 2GB</li>
-        <li class="warn">🟧 Leadtek PX9600 GT ZL</li>
-        <li class="warn">🟧 GT 730 4GD3 (UDORE)</li>
-        <li>Жёсткие диски Toshiba и WD Caviar (разобранный)</li>
-      </ul>
-      <div class="image-section">
-        <img src="/mnt/data/66a0be99-12a4-4386-bbcc-8dbbe7d6678f.png" alt="Коллекция железа" />
-      </div>
-    </section>
-    <section id="build" data-aos="fade-up">
-      <h2>💻 Моя сборка</h2>
-      <p>Цель: Мощный ПК для работы и игр.</p>
-      <ul>
-        <li class="check">✅ RTX 3070</li>
-        <li class="check">✅ Core i5-13400F</li>
-        <li class="check">✅ Кулер: ID-COOLING FROZN A610 ARGB</li>
-        <li class="check">✅ ОЗУ: 32 ГБ, DDR4</li>
-        <li class="check">✅ SSD 128 ГБ + HDD 3 ТБ</li>
-      </ul>
-    </section>
-    <section id="gallery" data-aos="fade-up">
-      <h2>📸 Галерея</h2>
-      <div class="gallery">
-        <img src="https://i.ibb.co/ZTyzsKn/pc1.jpg" alt="Сборка ПК">
-        <img src="https://i.ibb.co/TYRRSbD/pc2.jpg" alt="Чистка вентилятора">
-        <img src="https://i.ibb.co/bKZ2J9g/pc3.jpg" alt="Установка Windows">
-      </div>
-    </section>
-    <section id="reviews" data-aos="fade-up">
-      <h2>🗣️ Отзывы</h2>
-      <div class="reviews">
-        <div class="review-card">
-          <p>🔧 «Очень быстро и качественно заменил термопасту. ПК как новый!»</p>
-          <p style="color: var(--highlight-color);">— Данияр</p>
-        </div>
-        <div class="review-card">
-          <p>💻 «Помог собрать компьютер под мои задачи, работает идеально!»</p>
-          <p style="color: var(--highlight-color);">— Алихан</p>
-        </div>
-      </div>
-    </section>
-    <section id="contact" class="contact" data-aos="fade-up">
-      <h2>📞 Контакты</h2>
-      <p>📱 WhatsApp: <a href="https://wa.me/77473725060">+7 747 372 5060</a></p>
-      <p>💬 Telegram: <a href="https://t.me/Getringrov">@Getringrov</a></p>
-    </section>
-  </main>
-  <footer data-aos="fade-up">
-    <p>© 2025 AR-PC. Все права защищены.</p>
+  <section id="services" data-aos="fade-up">
+    <h2>🔧 Услуги</h2>
+    <p>Предлагаю ремонт и настройку ПК в посёлке Майский: чистка, сборка, замена комплектующих, настройка Windows, ускорение работы старых систем.</p>
+  </section>
+  <section id="collection" data-aos="fade-up">
+    <h2>🧬 Коллекция железа</h2>
+    <p>Я собираю старые комплектующие как музейную экспозицию:</p>
+    <ul>
+      <li class="warn">🟧 Pentium E5300</li>
+      <li class="warn">🟧 Core i5-3470</li>
+      <li class="warn">🟧 Zeppelin DDR3 2GB</li>
+      <li class="warn">🟧 Leadtek PX9600 GT ZL</li>
+      <li class="warn">🟧 GT 730 4GD3 (UDORE)</li>
+    </ul>
+    <p>Жёсткие диски Toshiba и WD Caviar (разобранный)</p>
+  </section>
+  <section id="mybuild" data-aos="fade-up">
+    <h2>🖥️ Моя сборка</h2>
+    <p>Цель: Мощный ПК для работы и игр.</p>
+    <ul>
+      <li class="check">✔ RTX 3070</li>
+      <li class="check">✔ Core i5-13400F</li>
+      <li class="check">✔ Кулер: ID-COOLING FROZN A610 ARGB</li>
+      <li class="check">✔ ОЗУ: 32 ГБ, DDR5</li>
+      <li class="check">✔ SSD 128 ГБ + HDD 3 ТБ</li>
+    </ul>
+  </section>
+  <section id="gallery" data-aos="fade-up">
+    <h2>🖼️ Галерея</h2>
+    <div class="gallery">
+      <img src="https://i.ibb.co/ZM5cjGJ/pc1.jpg" alt="PC image 1">
+      <img src="https://i.ibb.co/g7Sh4RP/pc2.jpg" alt="PC image 2">
+    </div>
+  </section>
+  <section id="reviews" data-aos="fade-up">
+    <h2>📝 Отзывы</h2>
+    <div class="reviews">
+      <div class="review-card">🔥 Отличная работа! ПК летает!</div>
+      <div class="review-card">👍 Надёжный мастер, рекомендую!</div>
+    </div>
+  </section>
+  <section id="contact" data-aos="fade-up">
+    <h2>📱 Контакты</h2>
+    <div class="contact">
+      <p>WhatsApp: <a href="https://wa.me/77473725060">+7 747 372 5060</a></p>
+      <p>Telegram: <a href="https://t.me/Getringrov">@Getringrov</a></p>
+    </div>
+  </section>
+  <footer>
+    &copy; 2025 AR-PC. Все права защищены.
   </footer>
-  <button id="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">🔼 Наверх</button>
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_f9c25f0300.mp3?filename=cyberpunk-ambient-125121.mp3" type="audio/mpeg">
-    Ваш браузер не поддерживает аудио.
+  <audio class="music-player" controls autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/09/audio_6b7314e53b.mp3?filename=future-vision-141795.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает воспроизведение аудио.
   </audio>
+  <button id="scrollTopBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">Наверх</button>
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>
     AOS.init();
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
+    const toggle = document.getElementById('themeToggle');
+    toggle.addEventListener('click', () => {
       document.body.classList.toggle('light-theme');
     });
     window.addEventListener('load', () => {
-      const preloader = document.getElementById('preloader');
-      if (preloader) {
-        preloader.style.display = 'none';
-      }
+      document.querySelector('.preloader').style.display = 'none';
     });
   </script>
 </body>
