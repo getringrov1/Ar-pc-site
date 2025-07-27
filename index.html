@@ -274,13 +274,3 @@
       isPlaying = !isPlaying;
     }
 
-    musicBtn.addEventListener('click', toggleMusic);
-
-    document.addEventListener('click', () => {
-      if (!isPlaying) {
-        bgMusic.play().catch(() => {});
-        isPlaying = true;
-      }
-    }, { once: true });
-  </script></body>
-</html>
