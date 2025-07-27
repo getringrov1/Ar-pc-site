@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="ru">
-<head>
+<!DOCTYPE html><html lang="ru"><head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AR-PC — Сборка, ремонт и коллекция ПК</title>
@@ -13,6 +12,11 @@
       background: #0d1117;
       color: #c9d1d9;
       overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light-mode {
+      background: #f4f4f4;
+      color: #0d1117;
     }
     header {
       background: #161b22;
@@ -22,6 +26,10 @@
       position: sticky;
       top: 0;
       z-index: 10;
+    }
+    body.light-mode header {
+      background: #e0e0e0;
+      border-bottom: 1px solid #bbb;
     }
     h1 {
       margin: 0;
@@ -65,6 +73,11 @@
       border-top: 1px solid #30363d;
       color: #8b949e;
     }
+    body.light-mode footer {
+      background: #e0e0e0;
+      color: #333;
+      border-top: 1px solid #bbb;
+    }
     #cursor {
       position: fixed;
       width: 10px;
@@ -98,6 +111,19 @@
     #topBtn:hover {
       background: #1f6feb;
     }
+    #themeToggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #58a6ff;
+      color: #0d1117;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #58a6ff;
+      z-index: 10000;
+    }
     @keyframes fadeIn {
       from { opacity: 0; } to { opacity: 1; }
     }
@@ -119,6 +145,7 @@
 <body>
   <canvas id="matrix"></canvas>
   <div id="cursor"></div>
+  <button id="themeToggle">🌓</button>
   <header>
     <h1>AR-PC</h1>
     <nav>
@@ -127,54 +154,57 @@
       <a href="#build">Моя сборка</a>
       <a href="#contact">Контакты</a>
     </nav>
-  </header>  <main>
+  </header>
+  <main>
     <section id="services">
       <h2>🛠️ Услуги</h2>
       <p>Предлагаю ремонт и настройку ПК в посёлке Майский: чистка, сборка, замена комплектующих, настройка Windows, ускорение работы старых систем.</p>
-    </section><section id="collection">
-  <h2>🧠 Коллекция железа</h2>
-  <p>Я собираю старые комплектующие как музейную экспозицию:</p>
-  <ul>
-    <li>🔸 Pentium E5300</li>
-    <li>🔸 Core i5-3470</li>
-    <li>🔸 Zeppelin DDR3 2GB</li>
-    <li>🔸 Leadtek PX9600 GT ZL</li>
-    <li>🔸 GT 730 4GD3 (UDORE)</li>
-    <li>🔸 Жёсткие диски Toshiba и WD Caviar (разобранный)</li>
-  </ul>
-</section>
-
-<section id="build">
-  <h2>🖥️ Моя сборка</h2>
-  <p><strong>Цель:</strong> Мощный ПК для работы и игр.</p>
-  <ul>
-    <li>✅ RTX 3070</li>
-    <li>✅ Core i5-13400F</li>
-    <li>✅ Кулер: ID-COOLING FROZN A610 ARGB</li>
-    <li>✅ ОЗУ: 32 ГБ DDR4</li>
-    <li>✅ SSD 128 ГБ + HDD 3 ТБ</li>
-  </ul>
-  <model-viewer src="https://modelviewer.dev/shared-assets/models/GPU.glb" alt="GPU 3D" auto-rotate camera-controls ar style="width: 100%; height: 400px;"></model-viewer>
-</section>
-
-<section id="contact">
-  <h2>📬 Контакты</h2>
-  <p>Пишите мне в Telegram: <a href="https://t.me/your_username" style="color:#58a6ff;">@your_username</a></p>
-</section>
-
-  </main>  <footer>
+    </section>
+    <section id="collection">
+      <h2>🧠 Коллекция железа</h2>
+      <p>Я собираю старые комплектующие как музейную экспозицию:</p>
+      <ul>
+        <li>🔸 Pentium E5300</li>
+        <li>🔸 Core i5-3470</li>
+        <li>🔸 Zeppelin DDR3 2GB</li>
+        <li>🔸 Leadtek PX9600 GT ZL</li>
+        <li>🔸 GT 730 4GD3 (UDORE)</li>
+        <li>🔸 Жёсткие диски Toshiba и WD Caviar (разобранный)</li>
+      </ul>
+    </section>
+    <section id="build">
+      <h2>🖥️ Моя сборка</h2>
+      <p><strong>Цель:</strong> Мощный ПК для работы и игр.</p>
+      <ul>
+        <li>✅ RTX 3070</li>
+        <li>✅ Core i5-13400F</li>
+        <li>✅ Кулер: ID-COOLING FROZN A610 ARGB</li>
+        <li>✅ ОЗУ: 32 ГБ DDR4</li>
+        <li>✅ SSD 128 ГБ + HDD 3 ТБ</li>
+      </ul>
+      <model-viewer src="https://modelviewer.dev/shared-assets/models/GPU.glb" alt="GPU 3D" auto-rotate camera-controls ar style="width: 100%; height: 400px;"></model-viewer>
+    </section>
+    <section id="contact">
+      <h2>📬 Контакты</h2>
+      <p>Пишите мне в Telegram: <a href="https://t.me/Getringrov" style="color:#58a6ff;">@Getringrov</a></p>
+      <p>WhatsApp: <a href="https://wa.me/77473725060" style="color:#58a6ff;">+7 747 372 5060</a></p>
+    </section>
+  </main>
+  <footer>
     &copy; 2025 AR-PC. Сделано с душой.
-  </footer><button id="topBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">🔝 Наверх</button>
-
-  <script>
-    // Custom cursor
+  </footer>
+  <button id="topBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">🔝 Наверх</button>  <!-- Тема -->  <script>
+    const toggleBtn = document.getElementById('themeToggle');
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+    });
+  </script>  <!-- Custom cursor -->  <script>
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
       cursor.style.top = e.clientY + 'px';
     });
-
-    // Matrix effect
+  </script>  <!-- Matrix effect -->  <script>
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     canvas.height = window.innerHeight;
@@ -198,5 +228,59 @@
       }
     }
     setInterval(drawMatrix, 33);
+  </script>  <!-- 🎵 Фоновая музыка -->  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_d5c96237f5.mp3" type="audio/mp3">
+    Ваш браузер не поддерживает аудио.
+  </audio><button id="musicToggle" title="Включить/выключить музыку">🎵</button>
+
+  <style>
+    #musicToggle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #58a6ff;
+      color: #0d1117;
+      border: none;
+      padding: 10px 12px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 9999;
+      box-shadow: 0 0 10px #58a6ff;
+      transition: background 0.3s;
+    }
+    #musicToggle:hover {
+      background: #1f6feb;
+    }
+    body.light-mode #musicToggle {
+      background: #0d1117;
+      color: #58a6ff;
+      box-shadow: 0 0 10px #0d1117;
+    }
+  </style>  <script>
+    const bgMusic = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicToggle');
+
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (isPlaying) {
+        bgMusic.pause();
+      } else {
+        bgMusic.play().catch(() => {
+          alert("Нажмите где-нибудь на страницу, чтобы включить музыку");
+        });
+      }
+      isPlaying = !isPlaying;
+    }
+
+    musicBtn.addEventListener('click', toggleMusic);
+
+    document.addEventListener('click', () => {
+      if (!isPlaying) {
+        bgMusic.play().catch(() => {});
+        isPlaying = true;
+      }
+    }, { once: true });
   </script></body>
-  </html>
+</html>
