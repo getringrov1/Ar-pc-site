@@ -2,228 +2,201 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AR-PC Сервис</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <title>AR-PC — Сборка, ремонт и коллекция ПК</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
-    :root {
-      --bg-color: #000;
-      --text-color: #fff;
-      --header-bg: #111;
-      --highlight-color: #0ff;
-      --image-border: #0ff;
-    }
-    .light-theme {
-      --bg-color: #f4f4f4;
-      --text-color: #000;
-      --header-bg: #fff;
-      --highlight-color: #007bff;
-      --image-border: #007bff;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-      font-family: 'Share Tech Mono', monospace;
-    }
     body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      background-image: url('https://i.ibb.co/hKx6N4J/matrix-bg.jpg');
-      background-size: cover;
-      background-attachment: fixed;
-      transition: background-color 0.5s, color 0.5s;
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      overflow-x: hidden;
     }
     header {
-      background: var(--header-bg);
-      padding: 15px 0;
+      background: #161b22;
+      padding: 20px;
       text-align: center;
-      border-bottom: 2px solid var(--highlight-color);
+      border-bottom: 1px solid #30363d;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
-    header h1 {
-      font-size: 2em;
-      color: var(--highlight-color);
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      color: #58a6ff;
+      text-shadow: 0 0 10px #58a6ff;
     }
     nav {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
       margin-top: 10px;
     }
     nav a {
-      color: var(--highlight-color);
+      margin: 0 15px;
+      color: #58a6ff;
       text-decoration: none;
-      transition: transform 0.3s;
+      transition: 0.3s;
     }
     nav a:hover {
-      transform: scale(1.1);
+      color: #f0f6fc;
+      text-shadow: 0 0 8px #58a6ff;
+    }
+    main {
+      padding: 30px;
+      animation: fadeIn 1.5s ease;
     }
     section {
-      padding: 50px 20px;
+      margin-bottom: 40px;
+      animation: slideUp 1s ease;
     }
     h2 {
-      color: var(--highlight-color);
-      margin-bottom: 20px;
+      color: #58a6ff;
+      font-size: 22px;
     }
-    ul {
-      list-style: none;
-      padding-left: 20px;
+    ul li {
+      margin-bottom: 5px;
     }
-    li {
-      margin-bottom: 10px;
-    }
-    .check { color: #0f0; }
-    .warn { color: #f90; }
-    .alert { color: #f00; }
     footer {
+      background: #161b22;
+      padding: 10px;
       text-align: center;
-      padding: 30px;
-      background: var(--header-bg);
-      color: #aaa;
+      font-size: 14px;
+      border-top: 1px solid #30363d;
+      color: #8b949e;
     }
-    .image-section img, .gallery img {
-      width: 100%;
-      max-width: 500px;
-      margin: 20px auto;
-      display: block;
-      border: 3px solid var(--image-border);
-      border-radius: 10px;
-    }
-    .contact {
-      margin-top: 30px;
-    }
-    .contact a {
-      color: var(--highlight-color);
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 10px;
-    }
-    #scrollTopBtn, #themeToggle {
+    #cursor {
       position: fixed;
-      padding: 10px 15px;
-      background: var(--highlight-color);
-      border: none;
-      color: var(--bg-color);
-      border-radius: 8px;
-      cursor: pointer;
+      width: 10px;
+      height: 10px;
+      background: #58a6ff;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s;
+      z-index: 9999;
     }
-    #scrollTopBtn {
+    #matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+    #topBtn {
+      position: fixed;
       bottom: 20px;
       right: 20px;
-    }
-    #themeToggle {
-      top: 20px;
-      left: 20px;
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-    .reviews {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .review-card {
-      flex: 1;
-      min-width: 250px;
-      padding: 15px;
-      background: var(--header-bg);
+      background: #58a6ff;
+      color: #0d1117;
+      border: none;
+      padding: 10px 15px;
       border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #58a6ff;
+      transition: background 0.3s;
     }
-    .music-player {
-      position: fixed;
-      bottom: 10px;
-      left: 10px;
-      background: var(--header-bg);
-      padding: 5px;
-      border-radius: 10px;
+    #topBtn:hover {
+      background: #1f6feb;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @media (max-width: 600px) {
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
+      main {
+        padding: 20px 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="preloader"></div>
-  <button id="themeToggle">🌗</button>
+  <canvas id="matrix"></canvas>
+  <div id="cursor"></div>
   <header>
     <h1>AR-PC</h1>
     <nav>
       <a href="#services">Услуги</a>
       <a href="#collection">Коллекция</a>
-      <a href="#mybuild">Моя сборка</a>
-      <a href="#gallery">Галерея</a>
-      <a href="#reviews">Отзывы</a>
+      <a href="#build">Моя сборка</a>
       <a href="#contact">Контакты</a>
     </nav>
-  </header>
-  <section id="services" data-aos="fade-up">
-    <h2>🔧 Услуги</h2>
-    <p>Предлагаю ремонт и настройку ПК в посёлке Майский: чистка, сборка, замена комплектующих, настройка Windows, ускорение работы старых систем.</p>
-  </section>
-  <section id="collection" data-aos="fade-up">
-    <h2>🧬 Коллекция железа</h2>
-    <p>Я собираю старые комплектующие как музейную экспозицию:</p>
-    <ul>
-      <li class="warn">🟧 Pentium E5300</li>
-      <li class="warn">🟧 Core i5-3470</li>
-      <li class="warn">🟧 Zeppelin DDR3 2GB</li>
-      <li class="warn">🟧 Leadtek PX9600 GT ZL</li>
-      <li class="warn">🟧 GT 730 4GD3 (UDORE)</li>
-    </ul>
-    <p>Жёсткие диски Toshiba и WD Caviar (разобранный)</p>
-  </section>
-  <section id="mybuild" data-aos="fade-up">
-    <h2>🖥️ Моя сборка</h2>
-    <p>Цель: Мощный ПК для работы и игр.</p>
-    <ul>
-      <li class="check">✔ RTX 3070</li>
-      <li class="check">✔ Core i5-13400F</li>
-      <li class="check">✔ Кулер: ID-COOLING FROZN A610 ARGB</li>
-      <li class="check">✔ ОЗУ: 32 ГБ, DDR5</li>
-      <li class="check">✔ SSD 128 ГБ + HDD 3 ТБ</li>
-    </ul>
-  </section>
-  <section id="gallery" data-aos="fade-up">
-    <h2>🖼️ Галерея</h2>
-    <div class="gallery">
-      <img src="https://i.ibb.co/ZM5cjGJ/pc1.jpg" alt="PC image 1">
-      <img src="https://i.ibb.co/g7Sh4RP/pc2.jpg" alt="PC image 2">
-    </div>
-  </section>
-  <section id="reviews" data-aos="fade-up">
-    <h2>📝 Отзывы</h2>
-    <div class="reviews">
-      <div class="review-card">🔥 Отличная работа! ПК летает!</div>
-      <div class="review-card">👍 Надёжный мастер, рекомендую!</div>
-    </div>
-  </section>
-  <section id="contact" data-aos="fade-up">
-    <h2>📱 Контакты</h2>
-    <div class="contact">
-      <p>WhatsApp: <a href="https://wa.me/77473725060">+7 747 372 5060</a></p>
-      <p>Telegram: <a href="https://t.me/Getringrov">@Getringrov</a></p>
-    </div>
-  </section>
-  <footer>
-    &copy; 2025 AR-PC. Все права защищены.
-  </footer>
-  <audio class="music-player" controls autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2023/03/09/audio_6b7314e53b.mp3?filename=future-vision-141795.mp3" type="audio/mpeg">
-    Ваш браузер не поддерживает воспроизведение аудио.
-  </audio>
-  <button id="scrollTopBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">Наверх</button>
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  </header>  <main>
+    <section id="services">
+      <h2>🛠️ Услуги</h2>
+      <p>Предлагаю ремонт и настройку ПК в посёлке Майский: чистка, сборка, замена комплектующих, настройка Windows, ускорение работы старых систем.</p>
+    </section><section id="collection">
+  <h2>🧠 Коллекция железа</h2>
+  <p>Я собираю старые комплектующие как музейную экспозицию:</p>
+  <ul>
+    <li>🔸 Pentium E5300</li>
+    <li>🔸 Core i5-3470</li>
+    <li>🔸 Zeppelin DDR3 2GB</li>
+    <li>🔸 Leadtek PX9600 GT ZL</li>
+    <li>🔸 GT 730 4GD3 (UDORE)</li>
+    <li>🔸 Жёсткие диски Toshiba и WD Caviar (разобранный)</li>
+  </ul>
+</section>
+
+<section id="build">
+  <h2>🖥️ Моя сборка</h2>
+  <p><strong>Цель:</strong> Мощный ПК для работы и игр.</p>
+  <ul>
+    <li>✅ RTX 3070</li>
+    <li>✅ Core i5-13400F</li>
+    <li>✅ Кулер: ID-COOLING FROZN A610 ARGB</li>
+    <li>✅ ОЗУ: 32 ГБ DDR4</li>
+    <li>✅ SSD 128 ГБ + HDD 3 ТБ</li>
+  </ul>
+  <model-viewer src="https://modelviewer.dev/shared-assets/models/GPU.glb" alt="GPU 3D" auto-rotate camera-controls ar style="width: 100%; height: 400px;"></model-viewer>
+</section>
+
+<section id="contact">
+  <h2>📬 Контакты</h2>
+  <p>Пишите мне в Telegram: <a href="https://t.me/your_username" style="color:#58a6ff;">@your_username</a></p>
+</section>
+
+  </main>  <footer>
+    &copy; 2025 AR-PC. Сделано с душой.
+  </footer><button id="topBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">🔝 Наверх</button>
+
   <script>
-    AOS.init();
-    const toggle = document.getElementById('themeToggle');
-    toggle.addEventListener('click', () => {
-      document.body.classList.toggle('light-theme');
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
     });
-    window.addEventListener('load', () => {
-      document.querySelector('.preloader').style.display = 'none';
-    });
-  </script>
-</body>
+
+    // Matrix effect
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    const letters = '01';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({ length: columns }, () => 1);
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(13, 17, 23, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#58a6ff';
+      ctx.font = fontSize + 'px monospace';
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height || Math.random() > 0.95) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 33);
+  </script></body>
 </html>
