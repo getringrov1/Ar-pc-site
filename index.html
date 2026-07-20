@@ -1,202 +1,296 @@
-<!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AR-PC — Сборка, ремонт и коллекция ПК</title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: #0d1117;
-      color: #c9d1d9;
-      overflow-x: hidden;
-    }
-    header {
-      background: #161b22;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 1px solid #30363d;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    h1 {
-      margin: 0;
-      font-size: 32px;
-      color: #58a6ff;
-      text-shadow: 0 0 10px #58a6ff;
-    }
-    nav {
-      margin-top: 10px;
-    }
-    nav a {
-      margin: 0 15px;
-      color: #58a6ff;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    nav a:hover {
-      color: #f0f6fc;
-      text-shadow: 0 0 8px #58a6ff;
-    }
-    main {
-      padding: 30px;
-      animation: fadeIn 1.5s ease;
-    }
-    section {
-      margin-bottom: 40px;
-      animation: slideUp 1s ease;
-    }
-    h2 {
-      color: #58a6ff;
-      font-size: 22px;
-    }
-    ul li {
-      margin-bottom: 5px;
-    }
-    footer {
-      background: #161b22;
-      padding: 10px;
-      text-align: center;
-      font-size: 14px;
-      border-top: 1px solid #30363d;
-      color: #8b949e;
-    }
-    #cursor {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background: #58a6ff;
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s;
-      z-index: 9999;
-    }
-    #matrix {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-    #topBtn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #58a6ff;
-      color: #0d1117;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 10px;
-      cursor: pointer;
-      box-shadow: 0 0 10px #58a6ff;
-      transition: background 0.3s;
-    }
-    #topBtn:hover {
-      background: #1f6feb;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; } to { opacity: 1; }
-    }
-    @keyframes slideUp {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    @media (max-width: 600px) {
-      nav a {
-        display: block;
-        margin: 10px 0;
-      }
-      main {
-        padding: 20px 10px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AR-PC — сборка и ремонт компьютеров</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #17140f;
+    --panel: #211d15;
+    --panel-2: #29241a;
+    --amber: #e2a13e;
+    --green: #7c9473;
+    --text: #ece6d6;
+    --muted: #9c927b;
+    --line: #3a3326;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+  }
+  .mono{ font-family: 'JetBrains Mono', monospace; }
+  a{ color: inherit; }
+  :focus-visible{ outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  body{
+    background-image: radial-gradient(var(--line) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  header{
+    position: sticky; top:0; z-index: 20;
+    background: rgba(23,20,15,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 20px;
+    display:flex; align-items:center; justify-content: space-between;
+  }
+  .brand{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:800; letter-spacing: 1px; font-size: 1.05rem;
+    color: var(--amber);
+  }
+  .brand span{ color: var(--text); }
+  nav{ display:flex; gap: 18px; }
+  nav a{
+    font-family:'JetBrains Mono',monospace;
+    font-size: 0.78rem; text-decoration:none; color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  nav a:hover{ color: var(--amber); }
+
+  .hero{
+    max-width: 760px; margin: 0 auto;
+    padding: 56px 20px 40px;
+  }
+  .tag-eyebrow{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size: 0.72rem; color: var(--green);
+    border: 1px solid var(--line);
+    padding: 3px 8px; border-radius: 4px;
+    margin-bottom: 18px;
+  }
+  .hero h1{
+    font-family:'JetBrains Mono',monospace;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 6vw, 2.6rem);
+    line-height:1.2;
+    margin: 0 0 22px;
+  }
+  .hero h1 em{ color: var(--amber); font-style:normal; }
+
+  .diag{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px 20px;
+    font-family:'JetBrains Mono',monospace;
+    font-size: 0.88rem;
+    line-height: 1.9;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.2), 0 12px 30px -18px rgba(0,0,0,0.6);
+  }
+  .diag .k{ color: var(--muted); }
+  .diag .v{ color: var(--text); }
+  .diag .ok{ color: var(--green); }
+  .caret{
+    display:inline-block; width: 8px; height: 1em; background: var(--amber);
+    vertical-align: -2px; animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+  @media (prefers-reduced-motion: reduce){
+    .caret{ animation: none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  section{ max-width: 760px; margin: 0 auto; padding: 46px 20px; }
+  .sec-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size: 0.75rem; color: var(--green);
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin: 0 0 4px;
+  }
+  h2{
+    font-family:'JetBrains Mono',monospace;
+    font-size: 1.4rem; margin: 0 0 22px;
+  }
+  p.lede{ color: var(--muted); margin: -12px 0 24px; max-width: 56ch; }
+
+  .tags{
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 14px;
+  }
+  .tag{
+    position:relative;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 16px 16px 14px;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .tag:hover{ transform: translateY(-2px); border-color: var(--amber); }
+  .tag .id{
+    font-family:'JetBrains Mono',monospace; font-size: 0.68rem;
+    color: var(--muted); letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .tag h3{ margin: 0 0 6px; font-size: 1rem; }
+  .tag p{ margin:0; color: var(--muted); font-size: 0.86rem; }
+
+  .specimens{
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 14px;
+  }
+  .specimen{
+    background: var(--panel-2);
+    border: 1px dashed var(--line);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .specimen .name{ font-weight:600; margin-bottom: 4px; }
+  .specimen .meta{
+    font-family:'JetBrains Mono',monospace; font-size: 0.72rem; color: var(--muted);
+    display:flex; justify-content: space-between; margin-top: 10px;
+  }
+  .pill{
+    font-family:'JetBrains Mono',monospace; font-size: 0.68rem;
+    padding: 2px 7px; border-radius: 20px; border:1px solid var(--line);
+    color: var(--green);
+  }
+
+  .build-card{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .build-head{
+    padding: 16px 20px; border-bottom: 1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:baseline;
+  }
+  .build-head .id{ font-family:'JetBrains Mono',monospace; color: var(--amber); font-size:0.8rem; }
+  table.spec{ width:100%; border-collapse: collapse; }
+  table.spec tr{ border-bottom: 1px solid var(--line); }
+  table.spec tr:last-child{ border-bottom:none; }
+  table.spec td{ padding: 11px 20px; font-size: 0.92rem; }
+  table.spec td:first-child{
+    color: var(--muted); font-family:'JetBrains Mono',monospace; font-size:0.78rem;
+    width: 40%;
+  }
+
+  .io-panel{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px;
+    display:flex; gap: 14px; flex-wrap: wrap;
+  }
+  .port{
+    flex: 1 1 200px;
+    display:flex; align-items:center; gap: 12px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 16px;
+    text-decoration:none;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .port:hover{ border-color: var(--amber); background: #322b1c; }
+  .port .dot{
+    width:10px; height:10px; border-radius:50%; background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    flex-shrink:0;
+  }
+  .port .label{ font-family:'JetBrains Mono',monospace; font-size:0.72rem; color: var(--muted); display:block; }
+  .port .value{ font-weight:600; }
+
+  footer{
+    border-top: 1px solid var(--line);
+    padding: 24px 20px 40px;
+    text-align:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size: 0.72rem; color: var(--muted);
+  }
+</style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>
-  <div id="cursor"></div>
-  <header>
-    <h1>AR-PC</h1>
-    <nav>
-      <a href="#services">Услуги</a>
-      <a href="#collection">Коллекция</a>
-      <a href="#build">Моя сборка</a>
-      <a href="#contact">Контакты</a>
-    </nav>
-  </header>  <main>
-    <section id="services">
-      <h2>🛠️ Услуги</h2>
-      <p>Предлагаю ремонт и настройку ПК в посёлке Майский: чистка, сборка, замена комплектующих, настройка Windows, ускорение работы старых систем.</p>
-    </section><section id="collection">
-  <h2>🧠 Коллекция железа</h2>
-  <p>Я собираю старые комплектующие как музейную экспозицию:</p>
-  <ul>
-    <li>🔸 Pentium E5300</li>
-    <li>🔸 Core i5-3470</li>
-    <li>🔸 Zeppelin DDR3 2GB</li>
-    <li>🔸 Leadtek PX9600 GT ZL</li>
-    <li>🔸 GT 730 4GD3 (UDORE)</li>
-    <li>🔸 Жёсткие диски Toshiba и WD Caviar (разобранный)</li>
-  </ul>
-</section>
 
-<section id="build">
-  <h2>🖥️ Моя сборка</h2>
-  <p><strong>Цель:</strong> Мощный ПК для работы и игр.</p>
-  <ul>
-    <li>✅ RTX 3070</li>
-    <li>✅ Core i5-13400F</li>
-    <li>✅ Кулер: ID-COOLING FROZN A610 ARGB</li>
-    <li>✅ ОЗУ: 32 ГБ DDR4</li>
-    <li>✅ SSD 128 ГБ + HDD 3 ТБ</li>
-  </ul>
-  <model-viewer src="https://modelviewer.dev/shared-assets/models/GPU.glb" alt="GPU 3D" auto-rotate camera-controls ar style="width: 100%; height: 400px;"></model-viewer>
+<header>
+  <div class="brand">AR<span>-PC</span></div>
+  <nav>
+    <a href="#services">Услуги</a>
+    <a href="#contact">Связь</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <span class="tag-eyebrow">СЕВЕРНЫЙ КАЗАХСТАН</span>
+  <h1>Ремонт, сборка и апгрейд ПК — <em>от человека, который сам их коллекционирует.</em></h1>
+
+  <div class="diag mono">
+    <div><span class="k">&gt; STATUS:</span> <span class="ok">ONLINE</span> <span class="caret"></span></div>
+    <div><span class="k">&gt; ОПЫТ:</span> <span class="v">~2 года сборки и ремонта</span></div>
+    <div><span class="k">&gt; ПРОФИЛЬ:</span> <span class="v">ремонт · сборка на заказ · апгрейд б/у ПК</span></div>
+    <div><span class="k">&gt; ТАКЖЕ:</span> <span class="v">обзоры железа в TikTok / Telegram</span></div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="sec-label">Раздел 01</div>
+  <h2>Услуги</h2>
+  <p class="lede">Работаю с ремонтом и настройкой ПК, включая восстановление старых систем из б/у комплектующих.</p>
+  <div class="tags">
+    <div class="tag">
+      <div class="id">SVC-01</div>
+      <h3>Сборка на заказ</h3>
+      <p>Подбор железа под бюджет и задачи, сборка и первый запуск.</p>
+    </div>
+    <div class="tag">
+      <div class="id">SVC-02</div>
+      <h3>Ремонт и чистка</h3>
+      <p>Диагностика неполадок, чистка от пыли, замена термопасты и деталей.</p>
+    </div>
+    <div class="tag">
+      <div class="id">SVC-03</div>
+      <h3>Апгрейд б/у систем</h3>
+      <p>Восстанавливаю рабочие ПК из старых и списанных комплектующих.</p>
+    </div>
+    <div class="tag">
+      <div class="id">SVC-04</div>
+      <h3>Настройка Windows</h3>
+      <p>Установка, оптимизация и ускорение работы системы.</p>
+    </div>
+  </div>
 </section>
 
 <section id="contact">
-  <h2>📬 Контакты</h2>
-  <p>Пишите мне в Telegram: <a href="https://t.me/your_username" style="color:#58a6ff;">@your_username</a></p>
+  <div class="sec-label">Раздел 02</div>
+  <h2>Связь</h2>
+  <div class="io-panel">
+    <a class="port" href="https://tiktok.com/@tehnarik22" target="_blank">
+      <span class="dot"></span>
+      <span>
+        <span class="label mono">TIKTOK · нажми, чтобы перейти</span>
+        <span class="value">Обзоры и тесты железа</span>
+      </span>
+    </a>
+    <a class="port" href="https://t.me/Getringrov" target="_blank">
+      <span class="dot"></span>
+      <span>
+        <span class="label mono">TELEGRAM · нажми, чтобы перейти</span>
+        <span class="value">Заказать сборку или ремонт</span>
+      </span>
+    </a>
+    <a class="port" href="https://wa.me/77473725060" target="_blank">
+      <span class="dot"></span>
+      <span>
+        <span class="label mono">WHATSAPP · нажми, чтобы перейти</span>
+        <span class="value">+7 747 372 50 60</span>
+      </span>
+    </a>
+  </div>
 </section>
 
-  </main>  <footer>
-    &copy; 2025 AR-PC. Сделано с душой.
-  </footer><button id="topBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">🔝 Наверх</button>
+<footer>
+  AR-PC © 2026 · собрано вручную
+</footer>
 
-  <script>
-    // Custom cursor
-    const cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    });
-
-    // Matrix effect
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-    const letters = '01';
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array.from({ length: columns }, () => 1);
-    function drawMatrix() {
-      ctx.fillStyle = 'rgba(13, 17, 23, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#58a6ff';
-      ctx.font = fontSize + 'px monospace';
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > canvas.height || Math.random() > 0.95) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    }
-    setInterval(drawMatrix, 33);
-  </script></body>
+</body>
 </html>
