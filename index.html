@@ -5,15 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AR-PC — сборка и ремонт компьютеров</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #17140f;
+    --bg: #14110c;
     --panel: #211d15;
     --panel-2: #29241a;
-    --amber: #e2a13e;
-    --green: #7c9473;
-    --text: #ece6d6;
+    --amber: #e8ab48;
+    --amber-dim: #a87a2f;
+    --green: #85a179;
+    --text: #f1ebdc;
     --muted: #9c927b;
     --line: #3a3326;
   }
@@ -25,83 +26,128 @@
     color: var(--text);
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 16px;
+    position: relative;
   }
   .mono{ font-family: 'JetBrains Mono', monospace; }
   a{ color: inherit; }
   :focus-visible{ outline: 2px solid var(--amber); outline-offset: 3px; }
 
-  body{
+  /* perfboard dot grid + soft vignette */
+  body::before{
+    content:"";
+    position: fixed; inset:0; z-index:-2;
     background-image: radial-gradient(var(--line) 1px, transparent 1px);
-    background-size: 22px 22px;
+    background-size: 24px 24px;
+  }
+  body::after{
+    content:"";
+    position: fixed; inset:0; z-index:-1;
+    background: radial-gradient(ellipse 900px 500px at 50% -10%, rgba(232,171,72,0.10), transparent 60%);
+    pointer-events:none;
   }
 
   header{
     position: sticky; top:0; z-index: 20;
-    background: rgba(23,20,15,0.92);
-    backdrop-filter: blur(6px);
+    background: rgba(20,17,12,0.9);
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
     padding: 14px 20px;
     display:flex; align-items:center; justify-content: space-between;
   }
   .brand{
+    display:flex; align-items:center; gap:8px;
     font-family:'JetBrains Mono',monospace;
     font-weight:800; letter-spacing: 1px; font-size: 1.05rem;
     color: var(--amber);
   }
+  .brand svg{ width:20px; height:20px; }
   .brand span{ color: var(--text); }
   nav{ display:flex; gap: 18px; }
   nav a{
     font-family:'JetBrains Mono',monospace;
     font-size: 0.78rem; text-decoration:none; color: var(--muted);
     letter-spacing: 0.5px;
+    transition: color .15s ease;
   }
   nav a:hover{ color: var(--amber); }
 
+  /* ---------- HERO ---------- */
   .hero{
-    max-width: 760px; margin: 0 auto;
-    padding: 56px 20px 40px;
+    max-width: 780px; margin: 0 auto;
+    padding: 64px 20px 44px;
   }
   .tag-eyebrow{
-    display:inline-block;
+    display:inline-flex; align-items:center; gap:8px;
     font-family:'JetBrains Mono',monospace;
     font-size: 0.72rem; color: var(--green);
     border: 1px solid var(--line);
-    padding: 3px 8px; border-radius: 4px;
-    margin-bottom: 18px;
+    padding: 4px 10px; border-radius: 4px;
+    margin-bottom: 20px;
   }
+  .tag-eyebrow .blip{
+    width:6px; height:6px; border-radius:50%; background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+
   .hero h1{
     font-family:'JetBrains Mono',monospace;
     font-weight: 800;
-    font-size: clamp(1.9rem, 6vw, 2.6rem);
-    line-height:1.2;
-    margin: 0 0 22px;
+    font-size: clamp(2rem, 6.5vw, 2.9rem);
+    line-height:1.18;
+    margin: 0 0 26px;
+    letter-spacing: -0.5px;
   }
-  .hero h1 em{ color: var(--amber); font-style:normal; }
+  .hero h1 em{
+    font-style:normal;
+    background: linear-gradient(100deg, var(--amber), #ffd98a 60%, var(--amber));
+    -webkit-background-clip: text; background-clip:text; color: transparent;
+  }
 
   .diag{
-    background: var(--panel);
+    background: linear-gradient(180deg, var(--panel), #1c1810);
     border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 18px 20px;
+    border-radius: 10px;
+    padding: 20px 22px;
     font-family:'JetBrains Mono',monospace;
     font-size: 0.88rem;
-    line-height: 1.9;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.2), 0 12px 30px -18px rgba(0,0,0,0.6);
+    line-height: 2;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.25), 0 20px 45px -22px rgba(0,0,0,0.75), inset 0 0 30px -20px var(--amber);
+    position: relative;
+    overflow: visible;
   }
   .diag .k{ color: var(--muted); }
   .diag .v{ color: var(--text); }
-  .diag .ok{ color: var(--green); }
+  .diag .ok{ color: var(--green); font-weight:600; }
   .caret{
     display:inline-block; width: 8px; height: 1em; background: var(--amber);
     vertical-align: -2px; animation: blink 1s steps(1) infinite;
   }
   @keyframes blink{ 50%{ opacity:0; } }
+  .diag-line{
+    opacity:0; transform: translateX(-8px);
+    animation: fadeSlide .4s ease forwards;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .diag-line:nth-child(1){ animation-delay: .1s; }
+    .diag-line:nth-child(2){ animation-delay: .55s; }
+    .diag-line:nth-child(3){ animation-delay: 1.0s; }
+    .diag-line:nth-child(4){ animation-delay: 1.45s; }
+  }
+  @keyframes fadeSlide{ to{ opacity:1; transform: translateX(0); } }
   @media (prefers-reduced-motion: reduce){
-    .caret{ animation: none; }
+    .diag-line{ opacity:1; transform:none; }
+    .caret{ animation:none; }
     html{ scroll-behavior:auto; }
   }
 
-  section{ max-width: 760px; margin: 0 auto; padding: 46px 20px; }
+  /* PCB trace divider */
+  .trace{ max-width:780px; margin: 0 auto; padding: 0 20px; }
+  .trace svg{ width:100%; height:28px; display:block; opacity:.55; }
+
+  /* ---------- Sections ---------- */
+  section{ max-width: 780px; margin: 0 auto; padding: 40px 20px 50px; }
   .sec-label{
     font-family:'JetBrains Mono',monospace;
     font-size: 0.75rem; color: var(--green);
@@ -110,9 +156,9 @@
   }
   h2{
     font-family:'JetBrains Mono',monospace;
-    font-size: 1.4rem; margin: 0 0 22px;
+    font-size: 1.5rem; margin: 0 0 22px;
   }
-  p.lede{ color: var(--muted); margin: -12px 0 24px; max-width: 56ch; }
+  p.lede{ color: var(--muted); margin: -12px 0 26px; max-width: 56ch; }
 
   .tags{
     display:grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -120,100 +166,150 @@
   }
   .tag{
     position:relative;
-    background: var(--panel);
+    background: linear-gradient(165deg, var(--panel), #1b170f);
     border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 16px 16px 14px;
-    transition: transform .15s ease, border-color .15s ease;
+    border-radius: 8px;
+    padding: 18px 18px 16px;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
   }
-  .tag:hover{ transform: translateY(-2px); border-color: var(--amber); }
+  .tag:hover{
+    transform: translateY(-3px);
+    border-color: var(--amber-dim);
+    box-shadow: 0 14px 30px -18px rgba(232,171,72,0.35);
+  }
   .tag .id{
     font-family:'JetBrains Mono',monospace; font-size: 0.68rem;
-    color: var(--muted); letter-spacing: 1px; margin-bottom: 8px;
+    color: var(--amber-dim); letter-spacing: 1.5px; margin-bottom: 10px;
   }
-  .tag h3{ margin: 0 0 6px; font-size: 1rem; }
-  .tag p{ margin:0; color: var(--muted); font-size: 0.86rem; }
+  .tag h3{ margin: 0 0 6px; font-size: 1.05rem; }
+  .tag p{ margin:0; color: var(--muted); font-size: 0.87rem; }
 
-  .specimens{
-    display:grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 14px;
-  }
-  .specimen{
-    background: var(--panel-2);
-    border: 1px dashed var(--line);
-    border-radius: 6px;
-    padding: 14px 16px;
-  }
-  .specimen .name{ font-weight:600; margin-bottom: 4px; }
-  .specimen .meta{
-    font-family:'JetBrains Mono',monospace; font-size: 0.72rem; color: var(--muted);
-    display:flex; justify-content: space-between; margin-top: 10px;
-  }
-  .pill{
-    font-family:'JetBrains Mono',monospace; font-size: 0.68rem;
-    padding: 2px 7px; border-radius: 20px; border:1px solid var(--line);
-    color: var(--green);
-  }
-
-  .build-card{
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .build-head{
-    padding: 16px 20px; border-bottom: 1px solid var(--line);
-    display:flex; justify-content:space-between; align-items:baseline;
-  }
-  .build-head .id{ font-family:'JetBrains Mono',monospace; color: var(--amber); font-size:0.8rem; }
-  table.spec{ width:100%; border-collapse: collapse; }
-  table.spec tr{ border-bottom: 1px solid var(--line); }
-  table.spec tr:last-child{ border-bottom:none; }
-  table.spec td{ padding: 11px 20px; font-size: 0.92rem; }
-  table.spec td:first-child{
-    color: var(--muted); font-family:'JetBrains Mono',monospace; font-size:0.78rem;
-    width: 40%;
-  }
-
+  /* contact = I/O panel */
   .io-panel{
-    background: var(--panel);
+    background: linear-gradient(165deg, var(--panel), #1b170f);
     border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 10px;
+    padding: 22px;
     display:flex; gap: 14px; flex-wrap: wrap;
   }
   .port{
-    flex: 1 1 200px;
-    display:flex; align-items:center; gap: 12px;
+    flex: 1 1 220px;
+    display:flex; align-items:center; gap: 14px;
     background: var(--panel-2);
     border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 14px 16px;
+    border-radius: 8px;
+    padding: 16px 18px;
     text-decoration:none;
-    transition: border-color .15s ease, background .15s ease;
+    transition: border-color .18s ease, background .18s ease, transform .18s ease;
   }
-  .port:hover{ border-color: var(--amber); background: #322b1c; }
-  .port .dot{
-    width:10px; height:10px; border-radius:50%; background: var(--green);
-    box-shadow: 0 0 8px var(--green);
-    flex-shrink:0;
+  .port:hover{
+    border-color: var(--amber);
+    background: #332b1a;
+    transform: translateY(-2px);
   }
-  .port .label{ font-family:'JetBrains Mono',monospace; font-size:0.72rem; color: var(--muted); display:block; }
+  .port svg{ width:22px; height:22px; flex-shrink:0; color: var(--green); }
+  .port:hover svg{ color: var(--amber); }
+  .port .label{ font-family:'JetBrains Mono',monospace; font-size:0.68rem; color: var(--muted); display:block; letter-spacing: 0.5px; }
   .port .value{ font-weight:600; }
 
   footer{
     border-top: 1px solid var(--line);
-    padding: 24px 20px 40px;
+    padding: 26px 20px 44px;
     text-align:center;
     font-family:'JetBrains Mono',monospace;
     font-size: 0.72rem; color: var(--muted);
+  }
+
+  /* ---------- ambient background particles ---------- */
+  .particles{ position: fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
+  .particle{
+    position:absolute; bottom:-20px; border-radius:50%;
+    filter: blur(0.5px);
+    animation: drift linear infinite;
+  }
+  .particle.amber{ background: var(--amber); box-shadow:0 0 10px var(--amber); }
+  .particle.green{ background: var(--green); box-shadow:0 0 10px var(--green); }
+  @keyframes drift{
+    0%{ transform: translateY(0) translateX(0); opacity:0; }
+    10%{ opacity:.5; }
+    90%{ opacity:.35; }
+    100%{ transform: translateY(-115vh) translateX(var(--drift,20px)); opacity:0; }
+  }
+
+  /* ---------- rotating GPU centerpiece (real CSS 3D flip card) ---------- */
+  .gpu-stage{
+    perspective: 1100px;
+    display:flex; justify-content:center;
+    margin: 8px 0 4px;
+    filter: drop-shadow(0 16px 26px rgba(0,0,0,0.55)) drop-shadow(0 0 26px rgba(232,171,72,0.25));
+  }
+  .gpu-3d{
+    position: relative;
+    width: 230px; height: 132px;
+    transform-style: preserve-3d;
+    animation: spinY 12s linear infinite;
+  }
+  @keyframes spinY{ from{ transform: rotateY(0deg); } to{ transform: rotateY(360deg); } }
+  .gpu-face{
+    position:absolute; inset:0;
+    border-radius: 10px;
+    backface-visibility: hidden;
+  }
+  .gpu-face.front{ transform: translateZ(9px); }
+  .gpu-face.back{
+    transform: rotateY(180deg) translateZ(9px);
+    background: linear-gradient(165deg, var(--panel), #1b170f);
+    border: 1px solid var(--line);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:6px;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .gpu-face.back .tag-id{ color: var(--amber); font-size: 0.78rem; letter-spacing: 1px; }
+  .gpu-face.back .tag-spec{ color: var(--muted); font-size: 0.66rem; text-align:center; padding: 0 20px; line-height:1.7; }
+  .gpu-edge{
+    position:absolute; top:0; width:18px; height:132px;
+    background: linear-gradient(180deg,#332c1a,#131007);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .gpu-edge.right{ right:0; transform-origin: right center; transform: rotateY(90deg); }
+  .gpu-edge.left{ left:0; transform-origin: left center; transform: rotateY(-90deg); }
+  .fan{
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: spinFan 2.2s linear infinite;
+  }
+  @keyframes spinFan{ to{ transform: rotate(360deg); } }
+  .gpu-hint{
+    text-align:center; margin: 14px 0 30px;
+    font-family:'JetBrains Mono',monospace; font-size:0.68rem; color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .gpu-3d{ animation: none; transform: rotateY(-24deg); }
+    .fan{ animation: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .particle{ animation: none; display:none; }
   }
 </style>
 </head>
 <body>
 
+<div class="particles" aria-hidden="true">
+  <div class="particle amber" style="left:8%; width:4px; height:4px; --drift:14px; animation-duration:9s; animation-delay:0s;"></div>
+  <div class="particle green" style="left:22%; width:3px; height:3px; --drift:-18px; animation-duration:12s; animation-delay:2s;"></div>
+  <div class="particle amber" style="left:40%; width:5px; height:5px; --drift:10px; animation-duration:10s; animation-delay:4s;"></div>
+  <div class="particle green" style="left:58%; width:3px; height:3px; --drift:-12px; animation-duration:14s; animation-delay:1s;"></div>
+  <div class="particle amber" style="left:74%; width:4px; height:4px; --drift:16px; animation-duration:11s; animation-delay:6s;"></div>
+  <div class="particle green" style="left:88%; width:3px; height:3px; --drift:-10px; animation-duration:13s; animation-delay:3s;"></div>
+</div>
+
 <header>
-  <div class="brand">AR<span>-PC</span></div>
+  <div class="brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 4v16M15 4v16M4 9h16M4 15h16"/></svg>
+    AR<span>-PC</span>
+  </div>
   <nav>
     <a href="#services">Услуги</a>
     <a href="#contact">Связь</a>
@@ -221,15 +317,67 @@
 </header>
 
 <div class="hero">
-  <span class="tag-eyebrow">СЕВЕРНЫЙ КАЗАХСТАН</span>
+  <span class="tag-eyebrow"><span class="blip"></span>СЕВЕРНЫЙ КАЗАХСТАН</span>
   <h1>Ремонт, сборка и апгрейд ПК — <em>от человека, который сам их коллекционирует.</em></h1>
 
-  <div class="diag mono">
-    <div><span class="k">&gt; STATUS:</span> <span class="ok">ONLINE</span> <span class="caret"></span></div>
-    <div><span class="k">&gt; ОПЫТ:</span> <span class="v">~2 года сборки и ремонта</span></div>
-    <div><span class="k">&gt; ПРОФИЛЬ:</span> <span class="v">ремонт · сборка на заказ · апгрейд б/у ПК</span></div>
-    <div><span class="k">&gt; ТАКЖЕ:</span> <span class="v">обзоры железа в TikTok / Telegram</span></div>
+  <div class="gpu-stage" aria-hidden="true">
+    <div class="gpu-3d">
+      <div class="gpu-edge right"></div>
+      <div class="gpu-edge left"></div>
+      <div class="gpu-face front">
+        <svg viewBox="0 0 230 132" width="230" height="132">
+          <rect x="4" y="14" width="222" height="90" rx="8" fill="#1c180f" stroke="#e8ab48" stroke-width="1.6"/>
+          <rect x="16" y="0" width="64" height="14" rx="2" fill="#211d15" stroke="#3a3326"/>
+          <rect x="0" y="34" width="10" height="6" fill="#85a179"/>
+          <rect x="0" y="48" width="10" height="6" fill="#85a179"/>
+          <rect x="0" y="62" width="10" height="6" fill="#85a179"/>
+          <g class="fan">
+            <circle cx="65" cy="59" r="30" fill="#141109" stroke="#3a3326" stroke-width="1.5"/>
+            <path d="M65 59 L65 33 A26 26 0 0 1 87 46 Z" fill="#e8ab48" opacity="0.85"/>
+            <path d="M65 59 L87 46 A26 26 0 0 1 87 72 Z" fill="#85a179" opacity="0.8"/>
+            <path d="M65 59 L87 72 A26 26 0 0 1 65 85 Z" fill="#e8ab48" opacity="0.85"/>
+            <path d="M65 59 L65 85 A26 26 0 0 1 43 72 Z" fill="#85a179" opacity="0.8"/>
+            <path d="M65 59 L43 72 A26 26 0 0 1 43 46 Z" fill="#e8ab48" opacity="0.85"/>
+            <path d="M65 59 L43 46 A26 26 0 0 1 65 33 Z" fill="#85a179" opacity="0.8"/>
+            <circle cx="65" cy="59" r="6" fill="#0f0d08" stroke="#e8ab48"/>
+          </g>
+          <g class="fan" style="animation-duration:1.9s; animation-direction:reverse;">
+            <circle cx="153" cy="59" r="30" fill="#141109" stroke="#3a3326" stroke-width="1.5"/>
+            <path d="M153 59 L153 33 A26 26 0 0 1 175 46 Z" fill="#e8ab48" opacity="0.85"/>
+            <path d="M153 59 L175 46 A26 26 0 0 1 175 72 Z" fill="#85a179" opacity="0.8"/>
+            <path d="M153 59 L175 72 A26 26 0 0 1 153 85 Z" fill="#e8ab48" opacity="0.85"/>
+            <path d="M153 59 L153 85 A26 26 0 0 1 131 72 Z" fill="#85a179" opacity="0.8"/>
+            <path d="M153 59 L131 72 A26 26 0 0 1 131 46 Z" fill="#e8ab48" opacity="0.85"/>
+            <path d="M153 59 L131 46 A26 26 0 0 1 153 33 Z" fill="#85a179" opacity="0.8"/>
+            <circle cx="153" cy="59" r="6" fill="#0f0d08" stroke="#e8ab48"/>
+          </g>
+          <rect x="202" y="20" width="16" height="6" fill="#0f0d08" stroke="#85a179"/>
+          <rect x="202" y="30" width="16" height="6" fill="#0f0d08" stroke="#85a179"/>
+          <rect x="4" y="104" width="222" height="10" rx="2" fill="#0f0d08" stroke="#3a3326"/>
+        </svg>
+      </div>
+      <div class="gpu-face back">
+        <div class="tag-id">AR-01 · СПЕЦИФИКАЦИЯ</div>
+        <div class="tag-spec">i5-14400F · RTX 3070<br>16 ГБ DDR4 · 512 ГБ NVMe</div>
+      </div>
+    </div>
   </div>
+  <p class="gpu-hint">← крутится сама, можно и пальцем →</p>
+
+  <div class="diag mono">
+    <div class="diag-line"><span class="k">&gt; STATUS:</span> <span class="ok">ONLINE</span> <span class="caret"></span></div>
+    <div class="diag-line"><span class="k">&gt; ОПЫТ:</span> <span class="v">~2 года сборки и ремонта</span></div>
+    <div class="diag-line"><span class="k">&gt; ПРОФИЛЬ:</span> <span class="v">ремонт · сборка на заказ · апгрейд б/у ПК</span></div>
+    <div class="diag-line"><span class="k">&gt; ТАКЖЕ:</span> <span class="v">обзоры железа в TikTok / Telegram</span></div>
+  </div>
+</div>
+
+<div class="trace" aria-hidden="true">
+  <svg viewBox="0 0 780 28" preserveAspectRatio="none">
+    <path d="M0 14 H320 Q332 14 332 2 H448 Q460 2 460 14 H780" fill="none" stroke="#3a3326" stroke-width="1.5"/>
+    <circle cx="332" cy="2" r="3" fill="#85a179"/>
+    <circle cx="460" cy="14" r="3" fill="#e8ab48"/>
+  </svg>
 </div>
 
 <section id="services">
@@ -260,26 +408,34 @@
   </div>
 </section>
 
+<div class="trace" aria-hidden="true">
+  <svg viewBox="0 0 780 28" preserveAspectRatio="none">
+    <path d="M0 2 H200 Q212 2 212 14 H600 Q612 14 612 2 H780" fill="none" stroke="#3a3326" stroke-width="1.5"/>
+    <circle cx="212" cy="14" r="3" fill="#e8ab48"/>
+    <circle cx="612" cy="2" r="3" fill="#85a179"/>
+  </svg>
+</div>
+
 <section id="contact">
   <div class="sec-label">Раздел 02</div>
   <h2>Связь</h2>
   <div class="io-panel">
     <a class="port" href="https://tiktok.com/@tehnarik22" target="_blank">
-      <span class="dot"></span>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82c-.9-.83-1.47-2-1.62-3.3h-3.3v13.7a2.6 2.6 0 1 1-2.6-2.6c.23 0 .45.02.66.07V10.4a5.9 5.9 0 0 0-.66-.04A5.94 5.94 0 1 0 15 16.3V9.34a8.2 8.2 0 0 0 4.6 1.4V7.44a5.4 5.4 0 0 1-3-1.62Z"/></svg>
       <span>
         <span class="label mono">TIKTOK · нажми, чтобы перейти</span>
         <span class="value">Обзоры и тесты железа</span>
       </span>
     </a>
     <a class="port" href="https://t.me/Getringrov" target="_blank">
-      <span class="dot"></span>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 3.5 2.7 10.9c-1.1.45-1.1 1.08-.2 1.35l4.8 1.5 1.85 5.6c.22.6.4.85.83.85.35 0 .5-.16.72-.38l1.9-1.83 4.9 3.6c.9.5 1.5.24 1.75-.83l3.15-14.8c.35-1.3-.5-1.9-1.4-1.45ZM8.9 13.9l-2-6.4L18.2 5l-9.3 8.9Zm.6 2 .5-3 6.2-5.6-4.9 6.2-1.8 2.4Z"/></svg>
       <span>
         <span class="label mono">TELEGRAM · нажми, чтобы перейти</span>
         <span class="value">Заказать сборку или ремонт</span>
       </span>
     </a>
     <a class="port" href="https://wa.me/77473725060" target="_blank">
-      <span class="dot"></span>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.35A10 10 0 1 0 12 2Zm0 18.2a8.15 8.15 0 0 1-4.16-1.14l-.3-.18-3 .8.8-2.9-.19-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.25-.13-1.44-.7-1.66-.78-.22-.08-.38-.13-.55.13-.16.25-.63.78-.77.94-.14.16-.28.18-.53.06-.25-.13-1.06-.39-2-1.25-.75-.66-1.25-1.48-1.4-1.73-.14-.25-.02-.38.11-.51.12-.12.25-.3.38-.46.13-.16.17-.27.25-.44.08-.18.04-.34-.02-.47-.06-.13-.55-1.33-.76-1.82-.2-.48-.4-.42-.55-.42h-.47c-.16 0-.42.06-.64.31-.22.25-.85.83-.85 2.03s.87 2.36.99 2.52c.13.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.5.58.18 1.1.16 1.52.1.46-.07 1.44-.59 1.65-1.15.2-.57.2-1.05.14-1.15-.06-.1-.22-.16-.47-.28Z"/></svg>
       <span>
         <span class="label mono">WHATSAPP · нажми, чтобы перейти</span>
         <span class="value">+7 747 372 50 60</span>
@@ -293,4 +449,4 @@
 </footer>
 
 </body>
-</html>
+  </html>
